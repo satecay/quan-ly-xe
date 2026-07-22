@@ -965,7 +965,7 @@
         </div>
       </div>
       <div class="toolbar">
-        <button class="btn" id="themeBtn" title="Chuyển giao diện">Tối</button>
+        <button class="btn icon" id="themeBtn" title="Chuyển giao diện" aria-label="Chuyển giao diện"></button>
         <button class="btn" id="refreshFuelBtn" title="Nạp lại bảng giá chính thức">Làm mới giá</button>
         <button class="btn" id="exportBtn" title="Xuất dữ liệu">Xuất dữ liệu</button>
         <button class="btn" id="restoreBtn" title="Khôi phục dữ liệu dự phòng">Khôi phục</button>
@@ -1525,8 +1525,21 @@
       } catch (error) {
         console.warn("Không lưu được theme", error);
       }
-      themeBtn.textContent = document.body.dataset.theme === "dark" ? "Sáng" : "Tối";
-      themeBtn.title = document.body.dataset.theme === "dark" ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối";
+      const isDark = document.body.dataset.theme === "dark";
+      themeBtn.innerHTML = isDark
+        ? `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        `
+        : `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        `;
+      themeBtn.title = isDark ? "Chuyển sang giao diện sáng" : "Chuyển sang giao diện tối";
+      themeBtn.setAttribute("aria-label", themeBtn.title);
     }
 
     function toggleTheme() {
